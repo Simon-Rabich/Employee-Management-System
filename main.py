@@ -1,5 +1,7 @@
-from database.connection import engine, Base, get_db
-from .controllers.employee_controll import handle_add_employee, handle_remove_employee, handle_promote_employee, handle_display_employees
+from src.database.connection import engine, Base, get_db
+from src.controllers.employee_cli import handle_add_employee, handle_remove_employee, handle_promote_employee, handle_display_employees
+from src.exceptions.input_salary_exception import InputError
+from termcolor import colored
 
 
 def init_db():
@@ -20,17 +22,24 @@ def main():
         choice = input("Enter choice: ")
 
         if choice == '1':
-            handle_add_employee(db)
+            try:
+                handle_add_employee(db)
+            except InputError as e:
+                print(colored(e.message, 'red'))
         elif choice == '2':
             handle_remove_employee(db)
         elif choice == '3':
-            handle_promote_employee(db)
+            try:
+                handle_promote_employee(db)
+            except InputError as e:
+                print(colored(e.message, 'red'))
         elif choice == '4':
             handle_display_employees(db)
         elif choice == '5':
             break
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()

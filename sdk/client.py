@@ -1,5 +1,5 @@
 import requests
-
+from dtos.employee_dto import EmployeeDTO
 
 class EmployeeManagementClient:
     def __init__(self, base_url: str):
@@ -14,7 +14,7 @@ class EmployeeManagementClient:
             "salary": salary
         }
         response = requests.post(url, json=payload)
-        return response.json()
+        return EmployeeDTO(**response.json())
 
     def remove_employee(self, emp_id: str):
         url = f"{self.base_url}/employees/{emp_id}"
@@ -28,9 +28,9 @@ class EmployeeManagementClient:
             "new_salary": new_salary
         }
         response = requests.put(url, json=payload)
-        return response.json()
+        return EmployeeDTO(**response.json())
 
     def display_employees(self):
         url = f"{self.base_url}/employees"
         response = requests.get(url)
-        return response.json()
+        return [EmployeeDTO(**emp) for emp in response.json()]
