@@ -1,14 +1,22 @@
 from sqlalchemy.orm import Session
+
+from src.exceptions.input_salary_exception import InputError
 from src.services.employee_serivce import add_employee, remove_employee, promote_employee, display_employees
+from tabulate import tabulate
+from termcolor import colored
+
 
 def handle_add_employee(db: Session):
     emp_id = input("Enter Employee ID: ")
     name = input("Enter Name: ")
     position = input("Enter Position: ")
-    salary = float(input("Enter Salary: "))
+    try:
+        salary = float(input("Enter Salary: "))
+    except ValueError:
+        raise InputError("Invalid input. Please enter a valid number for salary.")
+
     add_employee(db, emp_id, name, position, salary)
     print("Employee added successfully.")
-
 
 def handle_remove_employee(db: Session):
     emp_id = input("Enter Employee ID to remove: ")
@@ -24,7 +32,21 @@ def handle_promote_employee(db: Session):
     print("Employee promoted successfully.")
 
 
+def format_employee_table(employees):
+    table = []
+    for i, emp in enumerate(employees):
+        color = 'green' if i % 2 == 0 else 'yellow'
+        row = [colored(emp.emp_id, color), colored(emp.name, color), colored(emp.position, color),
+               colored(emp.salary, color)]
+        table.append(row)
+
+    # Color headers
+    headers = [colored('ID', 'cyan'), colored('Name', 'cyan'), colored('Position', 'cyan'), colored('Salary', 'cyan')]
+
+    return tabulate(table, headers=headers, tablefmt="grid")
+
+
 def handle_display_employees(db: Session):
     employees = display_employees(db)
-    for emp in employees:
-        print(f"ID: {emp.emp_id}, Name: {emp.name}, Position: {emp.position}, Salary: {emp.salary}")
+    print(format_employee_table(employees))
+
