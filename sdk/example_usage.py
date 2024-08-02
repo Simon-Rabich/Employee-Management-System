@@ -1,6 +1,5 @@
 from sdk.client import EmployeeManagementClient
 
-
 def main():
     base_url = "http://localhost:8000"
     client = EmployeeManagementClient(base_url)
@@ -13,7 +12,8 @@ def main():
     # Display employees
     print("Displaying employees...")
     response = client.display_employees()
-    print(response)
+    for emp in response:
+        print(emp)
 
     # Promote an employee
     print("Promoting an employee...")
