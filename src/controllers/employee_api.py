@@ -1,51 +1,46 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from typing import List
+from typing import Optional, Any
 from src.database.connection import get_db
 from src.services.employee_serivce import promote_employee, add_employee, remove_employee, display_employees
-from src.models.employee import Employee
-from dtos.employee_dto import EmployeeDTO
-
-
-class EmployeeCreate(BaseModel):
-    emp_id: str
-    name: str
-    position: str
-    salary: float
-
-
-class EmployeePromote(BaseModel):
-    new_position: str
-    new_salary: float
-
+from dtos.employee_dto import EmployeeDTO, EmployeeCreate, EmployeePromote
+from dtos.response_dto import ResponseDTO
+from utils.decorators.log_datetime import log_datetime
+from utils.format_response import format_response
 
 router = APIRouter()
 
 
-@router.post("/employees", response_model=EmployeeDTO)
-def add_employee_route(employee: EmployeeCreate, db: Session = Depends(get_db)):
-    db_employee = add_employee(db, employee.emp_id, employee.name, employee.position, employee.salary)
-    return EmployeeDTO.from_orm(db_employee)
+@router.post("/employees", status_code=201, response_model=ResponseDTO)
+@log_datetime
+def add_employee_route(employee: EmployeeCreate, db: Session = Depends(get_db)) -> ResponseDTO:
+    try:
+        db_employee = add_employee(db, employee.emp_id, employee.name, employee.position, employee.salary)
+        return format_response(success=True, result=EmployeeDTO.from_orm(db_employee))
+    except Exception as e:
+        return format_response(success=False, error=str(e))
 
 
-@router.delete("/employees/{emp_id}")
-def remove_employee_route(emp_id: str, db: Session = Depends(get_db)):
+@router.delete("/employees/{emp_id}", response_model=ResponseDTO)
+@log_datetime
+def remove_employee_route(emp_id: str, db: Session = Depends(get_db)) -> ResponseDTO:
     db_employee = remove_employee(db, emp_id)
     if not db_employee:
         raise HTTPException(status_code=404, detail="Employee not found")
-    return {"message": "Employee removed successfully"}
+    return format_response(success=True, result={"message": "Employee removed successfully"})
 
 
-@router.put("/employees/{emp_id}/promote", response_model=EmployeeDTO)
-def promote_employee_route(emp_id: str, promotion: EmployeePromote, db: Session = Depends(get_db)):
+@router.put("/employees/{emp_id}/promote", response_model=ResponseDTO)
+@log_datetime
+def promote_employee_route(emp_id: str, promotion: EmployeePromote, db: Session = Depends(get_db)) -> ResponseDTO:
     db_employee = promote_employee(db, emp_id, promotion.new_position, promotion.new_salary)
     if not db_employee:
         raise HTTPException(status_code=404, detail="Employee not found")
-    return EmployeeDTO.from_orm(db_employee)
+    return format_response(success=True, result=EmployeeDTO.from_orm(db_employee))
 
 
-@router.get("/employees", response_model=List[EmployeeDTO])
-def display_employees_route(db: Session = Depends(get_db)):
+@router.get("/employees", response_model=ResponseDTO)
+@log_datetime
+def display_employees_route(db: Session = Depends(get_db)) -> ResponseDTO:
     employees = display_employees(db)
-    return [EmployeeDTO.from_orm(emp) for emp in employees]
+    return format_response(success=True, result=[EmployeeDTO.from_orm(emp) for emp in employees])

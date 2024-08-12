@@ -1,34 +1,27 @@
+import logging
 from fastapi import FastAPI
-from src.database.connection import Base, engine
+from sqlalchemy import exc
+from src.database.connection import engine, Base
 from src.controllers.employee_api import router as employee_router
 
-tags_metadata = [
-    {
-        "name": "employees",
-        "description": "Operations with employees. The **read** operation can be done by anyone.",
-    }
-]
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-app = FastAPI(
-    title="Employee Management System API",
-    description="API for managing employees",
-    version="1.0.0",
-    docs_url="/documentation",  # Customize the URL path for Swagger UI
-    redoc_url="/redocumentation",  # Customize the URL path for ReDoc
-)
+app = FastAPI()
 
-# Create all tables in the database
-Base.metadata.create_all(bind=engine)
-
-# Include the router from the employee API
-app.include_router(employee_router)
-
+@app.on_event("startup")
+def on_startup():
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables created successfully.")
+    except exc.SQLAlchemyError as e:
+        logger.error("Failed to create database tables.")
+        logger.error(e)
+        raise e
 
 @app.get("/")
-def read_root():
-    return {"message": "Welcome to the Employee Management System"}
+async def read_root():
+    return {"Hello": "World"}
 
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("src.main_api:app", host="127.0.0.1", port=8000, reload=True)
+# Include the employee router
+app.include_router(employee_router, prefix="/api")

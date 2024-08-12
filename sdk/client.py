@@ -5,7 +5,7 @@ class EmployeeManagementClient:
     def __init__(self, base_url: str):
         self.base_url = base_url
 
-    def add_employee(self, emp_id: str, name: str, position: str, salary: float):
+    def add_employee(self, emp_id: str, name: str, position: str, salary: float) -> EmployeeDTO:
         url = f"{self.base_url}/employees"
         payload = {
             "emp_id": emp_id,

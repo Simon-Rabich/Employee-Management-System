@@ -8,17 +8,22 @@ services:
       POSTGRES_DB: your_database
       POSTGRES_USER: simonravitz
       POSTGRES_PASSWORD: your_password
+    volumes:
+      - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000
-    volumes:
-      - .:/app
     ports:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg2://simonravitz:your_password@db:5432/your_database
     depends_on:
       - db
+
+volumes:
+  db_data:

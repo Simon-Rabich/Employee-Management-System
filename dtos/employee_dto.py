@@ -1,5 +1,17 @@
-from dataclasses import dataclass
 from pydantic import BaseModel
+from dataclasses import dataclass
+
+
+class EmployeeCreate(BaseModel):
+    emp_id: str
+    name: str
+    position: str
+    salary: float
+
+
+class EmployeePromote(BaseModel):
+    new_position: str
+    new_salary: float
 
 
 @dataclass
@@ -12,4 +24,3 @@ class EmployeeDTO(BaseModel):
     class Config:
         orm_mode = True
         from_attributes = True
-
