@@ -11,6 +11,7 @@ from src.controllers.employee_api import (
 )
 from src.models.employee import Employee
 from dtos.employee_dto import EmployeeDTO
+from dtos.response_dto import ResponseDTO
 
 
 @pytest.fixture
@@ -28,7 +29,7 @@ class BaseTest:
 
 
 class TestEmployeeAPI(BaseTest):
-    @patch('src.services.employee_serivce.add_employee')
+    @patch('src.controllers.employee_api.add_employee')  # Corrected path here
     def test_add_employee_route(self, mock_add_employee):
         # Arrange
         employee_data = {
@@ -45,7 +46,7 @@ class TestEmployeeAPI(BaseTest):
         response = add_employee_route(employee_create, self.db)
 
         # Assert
-        assert response == EmployeeDTO.from_orm(mock_employee)
+        assert response == ResponseDTO(success=True, result=EmployeeDTO.from_orm(mock_employee))
         mock_add_employee.assert_called_once_with(
             self.db,
             employee_data["emp_id"],
@@ -54,7 +55,7 @@ class TestEmployeeAPI(BaseTest):
             employee_data["salary"],
         )
 
-    @patch('src.services.employee_serivce.remove_employee')
+    @patch('src.controllers.employee_api.remove_employee')  # Corrected path here
     def test_remove_employee_route(self, mock_remove_employee):
         # Arrange
         emp_id = "1"
@@ -65,10 +66,10 @@ class TestEmployeeAPI(BaseTest):
         response = remove_employee_route(emp_id, self.db)
 
         # Assert
-        assert response == {"message": "Employee removed successfully"}
+        assert response == ResponseDTO(success=True, result={"message": "Employee removed successfully"})
         mock_remove_employee.assert_called_once_with(self.db, emp_id)
 
-    @patch('src.services.employee_serivce.remove_employee')
+    @patch('src.controllers.employee_api.remove_employee')  # Corrected path here
     def test_remove_employee_route_not_found(self, mock_remove_employee):
         # Arrange
         emp_id = "1"
@@ -80,7 +81,7 @@ class TestEmployeeAPI(BaseTest):
         assert exc_info.value.status_code == 404
         assert exc_info.value.detail == "Employee not found"
 
-    @patch('src.services.employee_serivce.promote_employee')
+    @patch('src.controllers.employee_api.promote_employee')  # Corrected path here
     def test_promote_employee_route(self, mock_promote_employee):
         # Arrange
         emp_id = "1"
@@ -95,12 +96,12 @@ class TestEmployeeAPI(BaseTest):
         response = promote_employee_route(emp_id, promotion_create, self.db)
 
         # Assert
-        assert response == EmployeeDTO.from_orm(mock_employee)
+        assert response == ResponseDTO(success=True, result=EmployeeDTO.from_orm(mock_employee))
         mock_promote_employee.assert_called_once_with(
             self.db, emp_id, promotion_data["new_position"], promotion_data["new_salary"]
         )
 
-    @patch('src.services.employee_serivce.promote_employee')
+    @patch('src.controllers.employee_api.promote_employee')  # Corrected path here
     def test_promote_employee_route_not_found(self, mock_promote_employee):
         # Arrange
         emp_id = "1"
@@ -114,7 +115,7 @@ class TestEmployeeAPI(BaseTest):
         assert exc_info.value.status_code == 404
         assert exc_info.value.detail == "Employee not found"
 
-    @patch('src.services.employee_serivce.display_employees')
+    @patch('src.controllers.employee_api.display_employees')  # Corrected path here
     def test_display_employees_route(self, mock_display_employees):
         # Arrange
         mock_employee_1 = self.create_employee("1", "John Doe", "Developer", 60000.0)
@@ -125,10 +126,10 @@ class TestEmployeeAPI(BaseTest):
         response = display_employees_route(self.db)
 
         # Assert
-        assert response == [
+        assert response == ResponseDTO(success=True, result=[
             EmployeeDTO.from_orm(mock_employee_1),
             EmployeeDTO.from_orm(mock_employee_2),
-        ]
+        ])
         mock_display_employees.assert_called_once_with(self.db)
 
 
