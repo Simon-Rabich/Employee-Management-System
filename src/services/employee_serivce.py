@@ -1,12 +1,18 @@
 from sqlalchemy.orm import Session
 from src.models.employee import Employee
+import logging
 
 
 def add_employee(db: Session, emp_id: str, name: str, position: str, salary: float):
+    logging.info("add_employee called")
     db_employee = Employee(emp_id=emp_id, name=name, position=position, salary=salary)
+    logging.info(f"Employee created: {db_employee}")
     db.add(db_employee)
+    logging.info("Employee added to session")
     db.commit()
+    logging.info("Session committed")
     db.refresh(db_employee)
+    logging.info("Employee refreshed")
     return db_employee
 
 
