@@ -12,7 +12,10 @@ class Employee(Base):
     salary = Column(Numeric)
     creation_time = Column(DateTime(timezone=True), server_default=func.now())
     last_update_time = Column(DateTime(timezone=True), onupdate=func.now())
+<<<<<<< HEAD
 
 
 my_dict = {'a': 1, 'b': 2, 'c': 3}
 items_view = my_dict.items()
+=======
+>>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7

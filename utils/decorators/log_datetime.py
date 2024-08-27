@@ -17,6 +17,7 @@ def log_datetime(func: Callable) -> Callable:
     return wrapper
 
 
+<<<<<<< HEAD
 @log_datetime
 def daily_backup():
     print('Daily backup job has finished.')
@@ -24,3 +25,12 @@ def daily_backup():
 
 if __name__ == '__main__':
     daily_backup()
+=======
+# @log_datetime
+# def daily_backup():
+#     print('Daily backup job has finished.')
+#
+#
+# if __name__ == '__main__':
+#     daily_backup()
+>>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
