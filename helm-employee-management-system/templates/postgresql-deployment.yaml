@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-management-system-postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employee-management-system-postgresql
+  template:
+    metadata:
+      labels:
+        app: employee-management-system-postgresql
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13
+        env:
+        - name: POSTGRES_DB
+          value: "crmdb"
+        - name: POSTGRES_USER
+          value: "simonravitz"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: employee-management-system-secret
+              key: postgresql_password
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-persistent-storage
+      volumes:
+      - name: postgres-persistent-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
