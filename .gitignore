@@ -7,3 +7,4 @@ nexus-backup-2024-08-24.tar.gz
 *.so
 *.dylib
 terraform/.terraform
+myenv/
