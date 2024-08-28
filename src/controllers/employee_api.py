@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-<<<<<<< HEAD
-=======
+
 from typing import Optional, Any
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
 from src.database.connection import get_db
 from src.services.employee_serivce import promote_employee, add_employee, remove_employee, display_employees
 from dtos.employee_dto import EmployeeDTO, EmployeeCreate, EmployeePromote

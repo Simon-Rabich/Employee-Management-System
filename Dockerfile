@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
@@ -40,5 +39,4 @@ COPY --from=builder /app /app
 
 EXPOSE 8000
 
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

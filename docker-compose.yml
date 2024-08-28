@@ -19,10 +19,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-<<<<<<< HEAD
       DATABASE_URL: 'postgresql+psycopg2://simonravitz:Aa123456!@host.docker.internal:5432/crmdb'
-=======
-      DATABASE_URL: postgresql+psycopg2://simonravitz:your_password@db:5432/your_database
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
     depends_on:
       - db

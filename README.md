@@ -2,7 +2,6 @@
 
 A FastAPI-based Employee Management System with DevOps integrations.
 
-<<<<<<< HEAD
 ## 📦 Usage
 
 ```bash
@@ -31,15 +30,12 @@ kubectl get svc
 
 
 ```
-=======
 ## 📦 Installation
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
 
 ```bash
 pip install employee_management_system
 ```
 
-<<<<<<< HEAD
 ## 🛠️ Tools
 DATA BASE, ASGI, K8S, HELM Chart, DOCKER COMPOSE, REST API FRAMEWORK, API RESPONSE and DTO, SDK, CLI 
 Services layers: Services > Controllers > Data Access Layer  
@@ -98,7 +94,6 @@ Argo CD
 - 📦 **PyPI**: WIP
 - 🧪 **Testing**: Pytest, Mocking
 - 🔐 **Pagination**: WIP
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
 
 ### 📑 **Pagination**
 *WIP*
@@ -107,9 +102,5 @@ Argo CD
 
 🛡️ **Battle-tested**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.
 
-<<<<<<< HEAD
-Ready for production with a strong DevOps foundation.
-=======
 Ready for production with a strong DevOps foundation.
 
->>>>>>> f0ae657d6e8455067a87cef92b8ffd1a79880ab7
