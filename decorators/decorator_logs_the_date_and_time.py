@@ -1,18 +1,13 @@
 from datetime import datetime
-from functools import wraps
-from typing import Callable
 
 
-# decorator_logs_the_date_and_time
-
-def log_datetime(func: Callable) -> Callable:
+def log_datetime(func):
     """Log the date and time of a function"""
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper():
         print(f'Function: {func.__name__}\nRun on: {datetime.today().strftime("%Y-%m-%d %H:%M:%S")}')
         print(f'{"-" * 30}')
-        return func(*args, **kwargs)
+        func()
 
     return wrapper
 
@@ -24,4 +19,3 @@ def daily_backup():
 
 if __name__ == '__main__':
     daily_backup()
-
