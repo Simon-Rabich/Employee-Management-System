@@ -2,102 +2,114 @@
 
 A FastAPI-based Employee Management System with DevOps integrations.
 
-## 📦 Usage
-
+## CLI Program Demonstrate CRUD action
 ```bash
-1. python main.py
-2. psql -U simonravitz -h localhost postgres
-3. uvicorn src.main:app --host 0.0.0.0 --port 8000
-4. docker-compose up --build
-5. **minikube start**
-6. kubectl port-forward deployment/employee-management-system 8080:8000
-Argo CD - GitOps:
-7. kubectl port-forward svc/argocd-server -n argocd 8081:443
-8. /usr/local/nexus/bin/nexus start
-Deploy or Upgrade with Helm:
-9. helm upgrade --install employee-management-system ./helm-employee-management-system
- helm status employee-management-system
-
-Logs: 
-helm install employee-management-system ./helm-employee-management-system --debug --dry-run
-
-Verify the Deployment:
-
-kubectl get pvc
-kubectl get pods
-kubectl get svc
-
-
-
+python main.py
 ```
-## 📦 Installation
+## Data Base using PostgresSQL
+```bash
+psql -U simonravitz -h localhost postgres
+```
+## FastAPI - using Uvicorn, which is an ASGI (Asynchronous Server Gateway Interface) server. + openapi
+```bash
+uvicorn src.main:app --host 0.0.0.0 --port 8000
+```
+## docker-compose - setting up locally
+```bash
+docker-compose up --build
+```
+## Kubernetes
+```bash
+minikube start
+```
+## Start Kubernetes
+```bash
+minikube start
+```
+## Run Kubernetes
+```bash
+kubectl port-forward deployment/employee-management-system 8080:8000
+```
+## GitOps using ArgoCD
+```bash
+kubectl port-forward svc/argocd-server -n argocd 8081:443
+```
+## Get ArgoCD Password for UI 
+```bash
+ argocd admin initial-password -n argocd
+```
+## Start Nexus - Artifact Register Repository
+```bash
+/usr/local/nexus/bin/nexus start
+```
+## Deploy or Upgrade with Helm Chart
+```bash
+helm upgrade --install employee-management-system ./helm-employee-management-system
+```
+## Check Helm Deploy
+```bash
+ helm status employee-management-system
+```
+## Logs
+```bash
+ helm install employee-management-system ./helm-employee-management-system --debug --dry-run
+```
+## Verify the Deployment
+```bash
+ kubectl get pvc
+```
+```bash
+ kubectl get pods
+```
+```bash
+ kubectl get svc
+```
 
+## 📦 Installation
 ```bash
 pip install employee_management_system
 ```
 
 ## 🛠️ Tools
-DATA BASE, ASGI, K8S, HELM Chart, DOCKER COMPOSE, REST API FRAMEWORK, API RESPONSE and DTO, SDK, CLI 
-Services layers: Services > Controllers > Data Access Layer  
 
-Argo CD
+**Helm**
+**Nexus**
+**K8S**
+**ArgoCD**
 
-🔄 **Alembic** DB Migration 
+🔄 **Alembic** 
 
-🔗 **SQLAlchemy**
+🔗 **SQLAlchemy** 
 
-🐘 **Postgres**
+🐘 **Postgres** 
 
 ⚡  **FastAPI** 
 
-📄 **Swagger OpenAPI** 
+📄 **Swagger OpenAPI**  
 
 🔧 **GitHub Actions** 
 
-🐳 **Docker Compose
+🐳 **Docker Compose**
 
-**Dockerfile**: Rapid Setup & Containerization 
+🐳 **Dockerfile**
 
-🚀 **Uvicorn**: ASGI Web Server
+🚀 **Uvicorn**
 
-🔐 **Pydantic**: Data Validation 
+🔐 **Pydantic** 
 
-🛠️ **SDK**: Service Communication 
+🛠️ **SDK & DTO** 
 
-💻 **CLI Tool**: CRUD Operations 
+💻 **CLI** 
 
 🧩**Dependency Injection**: DB Session Management 
 
-📊 **Decorator & Logger** Monitor End Points
+📊 **Decorator & Logger**
 
-📦 **PyPI** egg file 
+📦 **PyPI & egg file** 
 
-🧪 **Pytest, Mocking** Testing
+🧪 **Pytest, Mocking**
 
 🔐 **Pagination**
-=======
-## 🛠️ Features & Tools
-
-- 🔄 **Alembic**: DB Migration
-- 🔗 **SQLAlchemy**: ORM
-- 🐘 **Postgres**: DB
-- ⚡ **FastAPI**: REST Framework
-- 📄 **Swagger OpenAPI**: Interactive API Docs
-- 🔧 **GitHub Actions**: CI
-- 🐳 **Docker Compose & Dockerfile**: Rapid Setup & Containerization
-- 🚀 **Uvicorn**: ASGI Web Server
-- 🔐 **Pydantic**: Data Validation
-- 🛠️ **SDK**: Service Communication
-- 💻 **CLI Tool**: CRUD Operations
-- 🧩 **Dependency Injection**: DB Session Management
-- 📊 **Logger & Decorators**: Monitoring & Observability
-- 📦 **PyPI**: WIP
-- 🧪 **Testing**: Pytest, Mocking
-- 🔐 **Pagination**: WIP
-
-### 📑 **Pagination**
-*WIP*
-
 
 
 🛡️ **Battle-tested**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.
