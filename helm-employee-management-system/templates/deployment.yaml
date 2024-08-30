@@ -24,6 +24,7 @@ spec:
               protocol: TCP
           env:
             - name: DATABASE_URL
+
               valueFrom:
                 secretKeyRef:
                   name: employee-management-system-secret

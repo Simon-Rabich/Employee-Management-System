@@ -42,6 +42,8 @@ kubectl port-forward svc/argocd-server -n argocd 8081:443
 ```bash
 /usr/local/nexus/bin/nexus start
 ```
+
+
 ## Deploy or Upgrade with Helm Chart
 ```bash
 helm upgrade --install employee-management-system ./helm-employee-management-system
@@ -77,42 +79,41 @@ pip install employee_management_system
 **K8S**
 **ArgoCD**
 
-🔄 **Alembic** 
+🔄 **Alembic**: DB Migration
 
-🔗 **SQLAlchemy** 
+🔗 **SQLAlchemy**: ORM
 
-🐘 **Postgres** 
+🐘 **Postgres**: DB
 
-⚡  **FastAPI** 
+⚡  **FastAPI**: REST API Framework
 
-📄 **Swagger OpenAPI**  
+📄 **Swagger OpenAPI**: Interactive UI API Docs
 
-🔧 **GitHub Actions** 
+🔧 **GitHub Actions**: CI
 
-🐳 **Docker Compose**
+🐳 **Docker Compose**: Rapid Setup & Containerization
 
-🐳 **Dockerfile**
+🐳 **Dockerfile**: Rapid Setup & Containerization
 
-🚀 **Uvicorn**
+🚀 **Uvicorn**: ASGI Web Server
 
-🔐 **Pydantic** 
+🔐 **Pydantic**: Data Validation 
 
-🛠️ **SDK & DTO** 
+🛠️ **SDK & DTO**: Service Communication
 
-💻 **CLI** 
+💻 **CLI**: CRUD Operations
 
 🧩**Dependency Injection**: DB Session Management 
 
-📊 **Decorator & Logger**
+📊 **Decorator & Logger**: Monitor
 
 📦 **PyPI & egg file** 
 
-🧪 **Pytest, Mocking**
+🧪 **Pytest, Mocking**: Testing
 
-🔐 **Pagination**
+🔐 **Pagination**: API Design
 
 
 🛡️ **Battle-tested**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.
 
 Ready for production with a strong DevOps foundation.
-
