@@ -12,11 +12,9 @@ image:
 
 # Environment variables (using Kubernetes secrets)
 env:
-  - name: DATABASE_URL
-    valueFrom:
-      secretKeyRef:
-        name: employee-management-system-secret
-        key: database_url
+  databaseUrl:
+    secretName: employee-management-system-secret
+    key: database_url
 
 # PostgreSQL configuration
 postgresql:
@@ -58,3 +56,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
+
+# Service Account configuration
+serviceAccount:
+  name: employee-management-system-service-account
