@@ -16,13 +16,14 @@ if __name__ == '__main__':
 
     merged_items = merge_items(items=items)
     print(merged_items)
-counter={}
+
+counter = {}
 for item in items:
-    value=list(item.values())
+    value = list(item.values())
     print(value)
     if value[0] in list(counter.keys()):
-        counter[value[0]] =value[1]+counter[value[0]]
+        counter[value[0]] = value[1] + counter[value[0]]
     else:
-        counter[value[0]]=value[1]
+        counter[value[0]] = value[1]
 
 print(counter)

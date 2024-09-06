@@ -17,10 +17,10 @@ spec:
       serviceAccountName: employee-management-system-service-account
       containers:
         - name: employee-management-system
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "simon0101/employee-management-system-web:latest"
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: {{ .Values.service.port }}
+            - containerPort: 8080
               protocol: TCP
           env:
             - name: DATABASE_URL

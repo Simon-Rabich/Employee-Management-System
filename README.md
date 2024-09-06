@@ -2,15 +2,29 @@
 
 A FastAPI-based Employee Management System with DevOps integrations.
 
-## CLI Program Demonstrate CRUD action
+## Update Docker Image (build, tag and push)
+```bash
+docker build -t simon0101/employee-management-system-web:latest .
+docker push simon0101/employee-management-system-web:latest
+docker images
+docker login
+```
+
+## DB Migration
+```bash
+alembic revision --autogenerate -m "Add product_version table"
+alembic revision --autogenerate -m "Add build_time column to ProductVersion table"
+alembic upgrade head
+```
+## CLI App (CRUD actions)
 ```bash
 python main.py
 ```
-## Data Base using PostgresSQL
+## PostgresSQL DB
 ```bash
 psql -U simonravitz -h localhost postgres
 ```
-## FastAPI - using Uvicorn, which is an ASGI (Asynchronous Server Gateway Interface) server. + openapi
+## FastAPI - using Uvicorn, which is an ASGI (Asynchronous Server Gateway Interface) server
 ```bash
 uvicorn src.main:app --host 0.0.0.0 --port 8000
 ```
@@ -22,29 +36,31 @@ docker-compose up --build
 ```bash
 minikube start
 ```
-## Start Kubernetes
-```bash
-minikube start
-```
-## Run Kubernetes
+## Run K8S
 ```bash
 kubectl port-forward deployment/employee-management-system 8080:8000
 ```
-## GitOps using ArgoCD
+## ArgoCD (GitOps)
 ```bash
 kubectl port-forward svc/argocd-server -n argocd 8081:443
 ```
-## Get ArgoCD Password for UI 
+## Get Password for ArgoCD UI 
 ```bash
  argocd admin initial-password -n argocd
 ```
-## Start Nexus - Artifact Register Repository
+## Nexus - Artifact Register Repository
 ```bash
 /usr/local/nexus/bin/nexus start
 ```
 ## Deploy or Upgrade with Helm Chart
 ```bash
 helm upgrade --install employee-management-system ./helm-employee-management-system
+```
+## Verify the Deployment
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl describe deployment employee-management-system
 ```
 ## Check Helm Deploy
 ```bash
@@ -54,17 +70,6 @@ helm upgrade --install employee-management-system ./helm-employee-management-sys
 ```bash
  helm install employee-management-system ./helm-employee-management-system --debug --dry-run
 ```
-## Verify the Deployment
-```bash
- kubectl get pvc
-```
-```bash
- kubectl get pods
-```
-```bash
- kubectl get svc
-```
-
 ## 📦 Installation
 ```bash
 pip install employee_management_system
@@ -72,47 +77,46 @@ pip install employee_management_system
 
 ## 🛠️ Tools
 
-**Helm**
-**Nexus**
-**K8S**
-**ArgoCD**
+⚓ **Helm Chart**
 
-🔄 **Alembic** 
+🗄 **Nexus**
 
-🔗 **SQLAlchemy** 
+📦 **Kubernetes**
 
-🐘 **Postgres** 
+🚢 **ArgoCD**
 
-⚡  **FastAPI** 
+🔄 **Alembic**
 
-📄 **Swagger OpenAPI**  
+🔗 **SQLAlchemy**
 
-🔧 **GitHub Actions** 
+🐘 **Postgres**
 
-🐳 **Docker Compose**
+⚡  **FastAPI**
 
-🐳 **Dockerfile**
+📄 **Swagger OpenAPI**
 
-🚀 **Uvicorn**
+🔧 **GitHub Actions**
 
-🔐 **Pydantic** 
+🐳 **Docker Compose**: Rapid Setup & Containerization
 
-🛠️ **SDK & DTO** 
+🐳 **Dockerfile**: Rapid Setup & Containerization
 
-💻 **CLI** 
+🚀 **Uvicorn**: ASGI Web Server
 
-🧩**Dependency Injection**: DB Session Management 
+🔐 **Pydantic**: Data Validation 
+
+🛠️ **SDK & DTO**: Service Communication
+
+💻 **CLI**
+
+🧩 **Dependency Injection**: DB Session Management 
 
 📊 **Decorator & Logger**
 
-📦 **PyPI & egg file** 
+📦 **PyPI & Egg file** 
 
 🧪 **Pytest, Mocking**
 
 🔐 **Pagination**
 
-
-🛡️ **Battle-tested**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.
-
-Ready for production with a strong DevOps foundation.
-
+🛡️ **Battle-tested tools and tech**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.

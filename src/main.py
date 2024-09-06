@@ -3,11 +3,16 @@ from fastapi import FastAPI
 from sqlalchemy import exc
 from src.database.connection import engine, Base
 from src.controllers.employee_api import router as employee_router
+from src.controllers.health_check import router as health_check_router  # Import the new router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+# Include the health check router
+app.include_router(health_check_router)
+
 
 @app.on_event("startup")
 def on_startup():
@@ -19,9 +24,11 @@ def on_startup():
         logger.error(e)
         raise e
 
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
+
 
 # Include the employee router
 app.include_router(employee_router, prefix="/api")
