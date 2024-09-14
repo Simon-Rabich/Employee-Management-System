@@ -8,10 +8,6 @@ from utils.format_response import format_response
 
 router = APIRouter()
 
-# @router.get("/health", response_model=ResponseDTO)
-# def health_check() -> ResponseDTO:
-#     return format_response(success=True, result={"status": "healthy"})
-
 
 @router.get("/health", response_model=ResponseDTO)
 def health_check(db: Session = Depends(get_db)) -> ResponseDTO:

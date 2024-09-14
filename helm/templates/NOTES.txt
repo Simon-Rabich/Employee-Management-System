@@ -1,0 +1,4 @@
+{{- if .Values.ingress.enabled -}}
+  # Access your application at:
+  http://{{ include "fastapi-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+{{- end -}}

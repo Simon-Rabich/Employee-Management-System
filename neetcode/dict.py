@@ -17,6 +17,18 @@ if __name__ == '__main__':
     merged_items = merge_items(items=items)
     print(merged_items)
 
+
+
+
+
+
+
+
+
+
+
+
+
 counter = {}
 for item in items:
     value = list(item.values())

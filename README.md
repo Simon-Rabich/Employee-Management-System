@@ -1,44 +1,62 @@
 # 🚀 Employee Management System
-
-A FastAPI-based Employee Management System with DevOps integrations.
+# Fully Customized RESTFul API App
 
 ## Update Docker Image (build, tag and push)
 ```bash
-docker build -t simon0101/employee-management-system-web:latest .
-docker push simon0101/employee-management-system-web:latest
+docker build -t simon658/fastapi-app:latest .
+docker push simon658/fastapi-app:latest
 docker images
 docker login
 ```
 
-## DB Migration
+## Alembic DB Migration
 ```bash
 alembic revision --autogenerate -m "Add product_version table"
-alembic revision --autogenerate -m "Add build_time column to ProductVersion table"
 alembic upgrade head
 ```
-## CLI App (CRUD actions)
+## 1. CLI App (CRUD actions)
 ```bash
 python main.py
 ```
-## PostgresSQL DB
+## 2. DB
 ```bash
 psql -U simonravitz -h localhost postgres
 ```
-## FastAPI - using Uvicorn, which is an ASGI (Asynchronous Server Gateway Interface) server
+## 3. FastAPI
 ```bash
 uvicorn src.main:app --host 0.0.0.0 --port 8000
 ```
-## docker-compose - setting up locally
+## Log time Decorator in endpoint
+```bash
+Run on: 2024-09-11 18:57:10
+------------------------------
+INFO:     127.0.0.1:61362 - "GET /api/employees HTTP/1.1" 200 OK
+```
+## Pydantic and DTO
+```bash
+from pydantic import BaseModel
+
+class HealthCheckDTO(BaseModel):
+    status: str
+    version: str = None
+    buildTime: str = None
+```
+## SDK
+```bash
+
+
+```
+## 4. docker-compose
 ```bash
 docker-compose up --build
 ```
-## Kubernetes
+## 5. Kubernetes
 ```bash
 minikube start
 ```
-## Run K8S
+## 6. Run application in k8s
 ```bash
-kubectl port-forward deployment/employee-management-system 8080:8000
+kubectl port-forward svc/fastapi-app-new-employee-app 8081:80
 ```
 ## ArgoCD (GitOps)
 ```bash
@@ -51,10 +69,14 @@ kubectl port-forward svc/argocd-server -n argocd 8081:443
 ## Nexus - Artifact Register Repository
 ```bash
 /usr/local/nexus/bin/nexus start
+docker exec -it nexus cat /nexus-data/admin.password
 ```
 ## Deploy or Upgrade with Helm Chart
 ```bash
-helm upgrade --install employee-management-system ./helm-employee-management-system
+helm upgrade --install employee-management-system ./helm
+ kubectl apply -f deployment.yaml
+ docker pull simon0101/employee-management-system-web:latest
+
 ```
 ## Verify the Deployment
 ```bash
@@ -68,55 +90,41 @@ kubectl describe deployment employee-management-system
 ```
 ## Logs
 ```bash
- helm install employee-management-system ./helm-employee-management-system --debug --dry-run
+ helm install employee-management-system ./helm --debug --dry-run
 ```
 ## 📦 Installation
 ```bash
 pip install employee_management_system
 ```
+## API Docs
+```bash
+Swagger
+```
+## EKS Cluster - Prometheus & Grafana, Monitoring Service
+```bash
+kubectl --namespace=prometheus port-forward deploy/prometheus-server 9090:9090
+kubectl --namespace grafana port-forward $POD_NAME 3000:3000
+```
+## Pagination
+```bash
+xxxxx
+```
+## CI workflow
+```bash
+GitHub Actions
+```
+## KubeApps
+```bash
+kubectl port-forward -n kubeapps svc/kubeapps 8080:80
+kubectl port-forward svc/worthless-belief-wordpress 8083:80 --namespace default
+```
+## Image, services, deployments and pods
+```bash
+```
+## Service Design
+```bash
 
-## 🛠️ Tools
-
-⚓ **Helm Chart**
-
-🗄 **Nexus**
-
-📦 **Kubernetes**
-
-🚢 **ArgoCD**
-
-🔄 **Alembic**
-
-🔗 **SQLAlchemy**
-
-🐘 **Postgres**
-
-⚡  **FastAPI**
-
-📄 **Swagger OpenAPI**
-
-🔧 **GitHub Actions**
-
-🐳 **Docker Compose**: Rapid Setup & Containerization
-
-🐳 **Dockerfile**: Rapid Setup & Containerization
-
-🚀 **Uvicorn**: ASGI Web Server
-
-🔐 **Pydantic**: Data Validation 
-
-🛠️ **SDK & DTO**: Service Communication
-
-💻 **CLI**
-
-🧩 **Dependency Injection**: DB Session Management 
-
-📊 **Decorator & Logger**
-
-📦 **PyPI & Egg file** 
-
-🧪 **Pytest, Mocking**
-
-🔐 **Pagination**
-
-🛡️ **Battle-tested tools and tech**: Trusted by top companies like FAANG, Tenable, Wiz, and Palo Alto Networks.
+```
+## Tests
+```bash
+```

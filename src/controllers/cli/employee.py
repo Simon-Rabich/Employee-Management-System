@@ -18,6 +18,7 @@ def handle_add_employee(db: Session):
     add_employee(db, emp_id, name, position, salary)
     print("Employee added successfully.")
 
+
 def handle_remove_employee(db: Session):
     emp_id = input("Enter Employee ID to remove: ")
     remove_employee(db, emp_id)
