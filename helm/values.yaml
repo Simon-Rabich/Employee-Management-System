@@ -1,0 +1,34 @@
+image:
+  repository: simon658/fastapi-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 32000
+
+ingress:
+  enabled: false
+
+resources: {}
+
+serviceAccount:
+  create: true
+  name: new-employee-app-service-account
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+env:
+  DATABASE_URL: "postgresql://simonravitz:Aa123456!@fastapi-app-new-employee-app-postgres:5432/crmdb"
+
+postgres:
+  username: simonravitz
+  password: Aa123456!
+  host: fastapi-app-new-employee-app-postgres
+  port: 5432
+  database: crmdb

@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from fastapi import HTTPException
-from src.controllers.employee_api import (
+from src.controllers.api.employee import (
     add_employee_route,
     remove_employee_route,
     promote_employee_route,

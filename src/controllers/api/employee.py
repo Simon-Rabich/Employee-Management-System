@@ -14,24 +14,6 @@ from utils.format_response import format_response
 router = APIRouter()
 
 
-@router.post("/product_version", response_model=ResponseDTO)
-def add_product_version(
-        environment: str = Query(...),
-        version: str = Query(...),
-        build_time: datetime = Query(...),
-        db: Session = Depends(get_db)
-) -> ResponseDTO:
-    try:
-        new_version = ProductVersion(environment=environment, version=version, build_time=build_time)
-        db.add(new_version)
-        db.commit()
-        return format_response(success=True,
-                               result={"environment": environment, "version": version, "build_time": build_time})
-    except Exception as e:
-        db.rollback()
-        return format_response(success=False, error=str(e))
-
-
 @router.post("/employees", status_code=201, response_model=ResponseDTO)
 @log_datetime
 def add_employee_route(employee: EmployeeCreate, db: Session = Depends(get_db)) -> ResponseDTO:

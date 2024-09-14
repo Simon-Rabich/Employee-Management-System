@@ -1,0 +1,5 @@
+# Chart.yaml
+apiVersion: v2
+name: new-employee-app
+description: A simple FastAPI application
+version: 0.1.0

@@ -1,5 +1,5 @@
 from src.database.connection import engine, Base, get_db
-from src.controllers.employee_cli import handle_add_employee, handle_remove_employee, handle_promote_employee, handle_display_employees
+from src.controllers.cli.employee import handle_add_employee, handle_remove_employee, handle_promote_employee, handle_display_employees
 from src.exceptions.input_salary_exception import InputError
 from termcolor import colored
 
