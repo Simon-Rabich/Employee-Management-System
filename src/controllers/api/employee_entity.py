@@ -4,17 +4,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from src.database.connection import get_db
-from src.models.product_version import ProductVersion
-from src.services.employee_serivce import promote_employee, add_employee, remove_employee, display_employees
+from src.services.employee_service import add_employee, promote_employee, display_employees, remove_employee
 from dtos.employee_dto import EmployeeDTO, EmployeeCreate, EmployeePromote
 from dtos.response_dto import ResponseDTO
-from utils.decorators.log_datetime import log_datetime
+from common.decorators.decorator_logs_the_date_and_time import log_datetime
 from utils.format_response import format_response
 
 router = APIRouter()
 
 
-@router.post("/employees", status_code=201, response_model=ResponseDTO)
+@router.post("/create_employee", response_model=ResponseDTO)
 @log_datetime
 def add_employee_route(employee: EmployeeCreate, db: Session = Depends(get_db)) -> ResponseDTO:
     try:
@@ -45,5 +44,6 @@ def promote_employee_route(emp_id: str, promotion: EmployeePromote, db: Session 
 @router.get("/employees", response_model=ResponseDTO)
 @log_datetime
 def display_employees_route(db: Session = Depends(get_db)) -> ResponseDTO:
+    # Now, the correct db session should be passed here
     employees = display_employees(db)
     return format_response(success=True, result=[EmployeeDTO.from_orm(emp) for emp in employees])

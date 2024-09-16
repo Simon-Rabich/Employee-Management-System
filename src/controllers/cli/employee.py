@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from src.exceptions.input_salary_exception import InputError
-from src.services.employee_serivce import add_employee, remove_employee, promote_employee, display_employees
+from src.services.employee_service import add_employee, remove_employee, promote_employee, display_employees
 from tabulate import tabulate
 from termcolor import colored
 

@@ -9,30 +9,37 @@ docker images
 docker login
 ```
 
-## Alembic DB Migration
+## DB Migration
 ```bash
 alembic revision --autogenerate -m "Add product_version table"
 alembic upgrade head
 ```
-## 1. CLI App (CRUD actions)
+## CLI App with CRUD Actions
 ```bash
 python main.py
 ```
-## 2. DB
+## DB Connection
 ```bash
 psql -U simonravitz -h localhost postgres
 ```
-## 3. FastAPI
+## DB Session
 ```bash
-uvicorn src.main:app --host 0.0.0.0 --port 8000
+xxxxxxxxxx
 ```
-## Log time Decorator in endpoint
+## FastAPI
 ```bash
+uvicorn src.main:app --host 0.0.0.0 --port 8000 || uvicorn src.main:app --reload
+```
+## Decorator
+```bash
+@log_datetime
+
+e.g:
 Run on: 2024-09-11 18:57:10
 ------------------------------
 INFO:     127.0.0.1:61362 - "GET /api/employees HTTP/1.1" 200 OK
 ```
-## Pydantic and DTO
+## Pydantic & DTO
 ```bash
 from pydantic import BaseModel
 
