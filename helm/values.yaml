@@ -1,31 +1,41 @@
 image:
   repository: simon658/fastapi-app
   tag: latest
-  pullPolicy: Always
+  pullPolicy: Always  # Always pull the latest image
 
 service:
   type: NodePort
   port: 80
-  nodePort: 32000
+  nodePort: 32000  # Exposing the service on this node port
 
 ingress:
   enabled: false
 
-resources: {}
+# Defining resources with limits and requests
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
 
 serviceAccount:
   create: true
   name: new-employee-app-service-account
 
+# Autoscaling settings
 autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
+  enabled: true
+  minReplicas: 3  # Setting a minimum of 3 replicas
+  maxReplicas: 10  # Maximum replicas
+  targetCPUUtilizationPercentage: 80  # Scale based on 80% CPU usage
 
+# Environment variables
 env:
   DATABASE_URL: "postgresql://simonravitz:Aa123456!@fastapi-app-new-employee-app-postgres:5432/crmdb"
 
+# PostgreSQL configuration
 postgres:
   username: simonravitz
   password: Aa123456!

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fastapi-app-new-employee-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: fastapi-app
@@ -20,3 +20,10 @@ spec:
           env:
             - name: DATABASE_URL
               value: {{ .Values.env.DATABASE_URL | quote }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
