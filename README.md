@@ -1,14 +1,25 @@
 # 🚀 Employee Management System
 # Fully Customized RESTFul API App
 
-## Update Docker Image (build, tag and push)
+## Rebuild and Push Docker Image
 ```bash
 docker build -t simon658/fastapi-app:latest .
 docker push simon658/fastapi-app:latest
-docker images
-docker login
 ```
+## Update the Deployment in Kubernetes
+```bash
+values.yaml
 
+image:
+  repository: simon658/fastapi-app
+  tag: latest
+  pullPolicy: Always
+```
+## Update Helm Chart
+```bash
+helm upgrade --install fastapi-app ./helm --namespace default
+kubectl rollout restart deployment fastapi-app-new-employee-app -n default
+```
 ## DB Migration
 ```bash
 alembic revision --autogenerate -m "Add product_version table"
@@ -24,7 +35,7 @@ psql -U simonravitz -h localhost postgres
 ```
 ## DB Session
 ```bash
-xxxxxxxxxx
+handling the database session using the Depends(get_db) pattern, which is typical for managing database sessions in FastAPI. The Depends(get_db) injects a database session (Session) into the route function and ensures that the session is available for the duration of the request.
 ```
 ## FastAPI
 ```bash
@@ -50,8 +61,8 @@ class HealthCheckDTO(BaseModel):
 ```
 ## SDK
 ```bash
-
-
+e.g:
+health_response = client.get_health(environment=environment)
 ```
 ## 4. docker-compose
 ```bash
@@ -61,29 +72,26 @@ docker-compose up --build
 ```bash
 minikube start
 ```
-## 6. Run application in k8s
+## 6. Run App in k8s
 ```bash
-kubectl port-forward svc/fastapi-app-new-employee-app 8081:80
+kubectl port-forward svc/fastapi-app-new-employee-app 8081:80 -n default
 ```
-## ArgoCD (GitOps)
+## GitOps using ArgoCD
 ```bash
-kubectl port-forward svc/argocd-server -n argocd 8081:443
+kubectl port-forward svc/argocd-server -n argocd 8083:443
 ```
 ## Get Password for ArgoCD UI 
 ```bash
  argocd admin initial-password -n argocd
 ```
+## Paging & API Schema Response
+```bash
+
+```
 ## Nexus - Artifact Register Repository
 ```bash
 /usr/local/nexus/bin/nexus start
 docker exec -it nexus cat /nexus-data/admin.password
-```
-## Deploy or Upgrade with Helm Chart
-```bash
-helm upgrade --install employee-management-system ./helm
- kubectl apply -f deployment.yaml
- docker pull simon0101/employee-management-system-web:latest
-
 ```
 ## Verify the Deployment
 ```bash

@@ -9,7 +9,7 @@ class EmployeeManagementClient:
         self.session = session or requests.Session()
 
     def add_employee(self, emp_id: str, name: str, position: str, salary: float):
-        url = f"{self.base_url}/create_employee"  # Added /api prefix
+        url = f"{self.base_url}/create_employee"
         payload = {
             "emp_id": emp_id,
             "name": name,

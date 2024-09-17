@@ -1,6 +1,4 @@
 from pydantic import BaseModel
-from dataclasses import dataclass
-
 
 class EmployeeCreate(BaseModel):
     emp_id: str
@@ -14,7 +12,6 @@ class EmployeePromote(BaseModel):
     new_salary: float
 
 
-@dataclass
 class EmployeeDTO(BaseModel):
     emp_id: str
     name: str
