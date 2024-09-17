@@ -1,5 +1,4 @@
-# 🚀 Employee Management System
-# Fully Customized RESTFul API App
+# 🚀 Employee Management System  Fully Customized RESTFul API App
 
 ## Rebuild and Push Docker Image
 ```bash
@@ -136,10 +135,41 @@ kubectl port-forward svc/worthless-belief-wordpress 8083:80 --namespace default
 ## Image, services, deployments and pods
 ```bash
 ```
-## Service Design
+## Service Architecture
 ```bash
+the code is normally divided into four layers:
 
+Controller - Represents standard Spring controllers, no business logic should be present here barring extreme circumstances.
+Service - Represents both the business logic layer and the facade for web requests. As we use the ResultRO object to wrap most usual requests, it is normally also tasked with packaging the payload inside a ResultRO.
+Handler - Mostly used for code that is not strictly business logic, but may be used for business logic if the action in question needs to be transactional.
+DAO/DAL (Data Access Object/Layer) - Strictly used for interaction with the database through various means. No logic should be present in this layer.
 ```
 ## Tests
 ```bash
+```
+## Code freeze
+```bash
+The end of a version is marked with a code freeze. 
+When a code freeze occurs, a new master branch is created from develop on each service for the new version. From that point on, the master branch is effectively locked, and any code added to develop afterwards will be targeted for the version after that.
+```
+## Database Changes
+```bash
+Database changes are handled exclusively via Flyway/Alembic migrations except for a few extreme cases.
+
+Logical separation is maintained between dev migrations and production migrations for quality control and possible optimizations.
+
+Each new migration will enter the “dev” folder of its relevant version. 
+
+Prior to code freeze, the developer in charge of Alembic/Flyway will manually examine each migration set to run and copy them to the “prod” directory of the same version. 
+
+Sometimes, the queries are optimized to reduce downtime in production.
+```
+## Code Review & Pull Requests
+```bash
+New code enters the code base via pull requests - the developer pushes his/her branch to origin and open a pull request on Bitbucket/Github.
+All pull requests, when merged, are squashed into one commit. As such, the pull request title must represent the final commit name.
+```
+## Hotfix Procedure
+```bash
+A hotfix is defined as any change that is targeted to a version whose master branch has already been created
 ```
