@@ -1,15 +1,21 @@
+# Image settings
 image:
   repository: simon658/fastapi-app
   tag: latest
   pullPolicy: Always  # Always pull the latest image
 
+# Service settings
 service:
   type: NodePort
   port: 80
   nodePort: 32000  # Exposing the service on this node port
 
+# Ingress settings
 ingress:
   enabled: false
+
+# Namespace configuration
+namespace: new-employee-app
 
 # Defining resources with limits and requests
 resources:
@@ -20,6 +26,7 @@ resources:
     cpu: "500m"
     memory: "512Mi"
 
+# Service account configuration
 serviceAccount:
   create: true
   name: new-employee-app-service-account
@@ -31,14 +38,24 @@ autoscaling:
   maxReplicas: 10  # Maximum replicas
   targetCPUUtilizationPercentage: 80  # Scale based on 80% CPU usage
 
-# Environment variables
+# Environment variables using secrets for sensitive data
 env:
-  DATABASE_URL: "postgresql://simonravitz:Aa123456!@fastapi-app-new-employee-app-postgres:5432/crmdb"
+  DATABASE_URL: "postgresql://$(DB_USER):$(DB_PASS)@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
 
-# PostgreSQL configuration
+extraEnv:
+  - name: DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: postgres-secret
+        key: username
+  - name: DB_PASS
+    valueFrom:
+      secretKeyRef:
+        name: postgres-secret
+        key: password
+
+# PostgreSQL configuration (managed via secrets)
 postgres:
-  username: simonravitz
-  password: Aa123456!
   host: fastapi-app-new-employee-app-postgres
   port: 5432
   database: crmdb
