@@ -38,5 +38,8 @@ class Sol3:
         return True
 
 
+
+    def pali(self):
+
 class Sol4:
     def
