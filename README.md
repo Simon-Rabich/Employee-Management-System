@@ -1,16 +1,14 @@
-# 🚀 Employee Management System 
+# Employee Management System (CRUD APP) 
 
-# Cloud-native application
+# Cloud-native
 
 ## Rebuild and Push Docker Image
 ```bash
 docker build -t simon658/fastapi-app:latest .
 docker push simon658/fastapi-app:latest
 ```
-## Update the Deployment in Kubernetes
+## Update the Deployment in values.yaml Kubernetes
 ```bash
-values.yaml
-
 image:
   repository: simon658/fastapi-app
   tag: latest
@@ -21,40 +19,38 @@ image:
 helm upgrade --install fastapi-app ./helm --namespace default
 kubectl rollout restart deployment fastapi-app-new-employee-app -n default
 ```
-## DB Migration
+## DB migration
 ```bash
 alembic revision --autogenerate -m "Add product_version table"
 alembic upgrade head
 ```
-## CLI App with CRUD Actions
+## CLI App
 ```bash
 python main.py
 ```
-## DB Connection
+## DB connection
 ```bash
 psql -U simonravitz -h localhost postgres
 ```
-## DB Session
+## DB session
 ```bash
 handling the database session using the Depends(get_db) pattern, which is typical for managing database sessions in FastAPI. The Depends(get_db) injects a database session (Session) into the route function and ensures that the session is available for the duration of the request.
 ```
 ## FastAPI
 ```bash
-uvicorn src.main:app --host 0.0.0.0 --port 8000 || uvicorn src.main:app --reload
+uvicorn src.main:app --host 0.0.0.0 --port 8000 
+uvicorn src.main:app --reload
 ```
 ## Decorator
 ```bash
 @log_datetime
 
-e.g:
 Run on: 2024-09-11 18:57:10
 ------------------------------
 INFO:     127.0.0.1:61362 - "GET /api/employees HTTP/1.1" 200 OK
 ```
 ## Pydantic & DTO
 ```bash
-from pydantic import BaseModel
-
 class HealthCheckDTO(BaseModel):
     status: str
     version: str = None
@@ -62,8 +58,6 @@ class HealthCheckDTO(BaseModel):
 ```
 ## SDK
 ```bash
-e.g:
-
 health_response = client.get_health(environment=environment)
 ```
 ## 4. docker-compose
@@ -140,9 +134,6 @@ GitHub Actions
 kubectl port-forward -n kubeapps svc/kubeapps 8080:80
 kubectl port-forward svc/worthless-belief-wordpress 8083:80 --namespace default
 ```
-## Image, services, deployments and pods
-```bash
-```
 ## Service Architecture
 ```bash
 the code is normally divided into four layers:
@@ -167,13 +158,9 @@ When a code freeze occurs, a new master branch is created from develop on each s
 ## Database Changes
 ```bash
 Database changes are handled exclusively via Flyway/Alembic migrations except for a few extreme cases.
-
 Logical separation is maintained between dev migrations and production migrations for quality control and possible optimizations.
-
 Each new migration will enter the “dev” folder of its relevant version. 
-
 Prior to code freeze, the developer in charge of Alembic/Flyway will manually examine each migration set to run and copy them to the “prod” directory of the same version. 
-
 Sometimes, the queries are optimized to reduce downtime in production.
 ```
 ## Code Review & Pull Requests
@@ -191,6 +178,14 @@ A hotfix is defined as any change that is targeted to a version whose master bra
   --namespace=new-employee-app \
   --from-literal=username=simonravitz \
   --from-literal=password=Aa123456!
+```
+## Endpoints API
+```bash
+# Get Health Check Product Version  
+```
+## Postgres Tables
+```bash
+  
 ```
 ## Next Steps:
 1. put infra code in a isolated repo , and use GitOps in automatic way 
