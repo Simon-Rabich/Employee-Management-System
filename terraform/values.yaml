@@ -1,0 +1,10 @@
+image:
+  repository: "simon658/fastapi-app"
+  tag: "latest"
+
+service:
+  type: "NodePort"
+  nodePort: 32000
+
+env:
+  DATABASE_URL: "postgresql://simonravitz:Aa123456!@fastapi-app-new-employee-app-postgres:5432/crmdb"

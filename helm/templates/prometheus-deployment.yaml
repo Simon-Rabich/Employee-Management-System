@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prometheus
-  namespace: default
+    name: prometheus
+    namespace: new-employee-app
 spec:
   replicas: 1
   selector:

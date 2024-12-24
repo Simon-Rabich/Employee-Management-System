@@ -1,0 +1,36 @@
+#all the job_name it's for get a metrics.
+
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  external_labels:
+    monitor: 'Monitoring'
+
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+#    basic_auth:
+#      username: 'admin'  # my  username
+#      password: 'NwoA6#k%2K*X#R#'  #  my passwrod
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['localhost:3000']
+
+# the node-exporter show the state of the system environment like: [cpu,memory)
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+
+# show the all the containers that running on the system environment and send all the metricks to promethus
+
+  - job_name: 'cAdvisor'
+    static_configs:
+      - targets: ['localhost:8080']
+
+  - job_name: 'fast_api'
+    static_configs:
+      - targets: ['localhost:8080']
