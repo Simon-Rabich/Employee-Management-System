@@ -1,18 +1,111 @@
 ![img.png](img.png)
 
+
+add new record modify and display (CRUD from CLI APP)
+> python main.py
+
+connect to DB and see new record
+
+> psql -U simonravitz -h localhost postgres
+
+run db migration
+
+> alembic revision --autogenerate -m "Add product_version table"
+
+run app in FastAPI (REST API - CRUD) 
+
+> uvicorn src.main:app --reload
+
+
+Decorator I created
+> @log_datetime
+
+```bash
+e.g:
+------------------------------
+Run on: 2024-09-11 18:57:10
+------------------------------
+INFO:     127.0.0.1:61362 - "GET /api/employees HTTP/1.1" 200 OK
+```
+
+
+An example of DTO I created using the Pydantic BaseModel
+
+```bash
+class HealthCheckDTO(BaseModel):
+    status: str
+    version: str = None
+    buildTime: str = None
+```
+
+I created SDK. usage example: 
+
+> health_response = client.get_health(environment=environment)
+
+run app with docker-compose
+
+> docker-compose up --build
+
+start Kubernetes
+
+> minikube start
+
+minikube config: 
+> kubectl config get-contexts
+> kubectl config use-context minikube
+
+run app with Kubernetes
+
+> kubectl port-forward svc/fastapi-app-new-employee-app 8081:80 -n default
+
+start ArgoCD
+> kubectl port-forward svc/argocd-server -n argocd 8083:443
+
+get ArgoCD creds 
+> argocd admin initial-password -n argocd
+
+an example of paging and API Schema Response I created
+
+```bash
+{
+  "success": true,
+  "error": null,
+  "result": {
+    "environment": "dev",
+    "version": "0.1.0",
+    "build_time": "17/09/2024 17:46:00"
+  },
+  "paging": null
+}
+```
+
+start Nexus - Artifact Repository
+> /usr/local/nexus/bin/nexus start
+
+get Nexus creds
+> docker exec -it nexus cat /nexus-data/admin.password
+
+## EKS Cluster - Prometheus & Grafana, Monitoring Service
+```bash
+kubectl --namespace=prometheus port-forward deploy/prometheus-server 9090:9090
+kubectl --namespace grafana port-forward grafana-748f57f84b-55s7p 3000:3000
+```
+
+
 # Guide
 1. run app with uvicron on local 
-2. make db migration with alembic + pydenic
-3. add new entity with sql alachmy
+2. run db migration with alembic + pydenic
+3. add new entity with sql alchemy
 4. connect with psql to see new table
 5. run app with docker compose
 6. run app with minikube
-7. deploy app with ArgoCd and use GitOps 
-8. build app with Nexus Repository
-9. provision app with Terraform
-10. build app with cross-plan
-11. see app in kube-apps / lens / rancher
-12. build and see dashboard prometheus and grafana
+7. deploy app with ArgoCd and use GitOps way 
+8. build upp with git-hub actions
+9. publish artifacts app to Nexus Repository
+10. provision app with Terraform
+11. Use cross-plan
+12. Use kube-apps / lens / rancher
+13. use dashboard prometheus and grafana
 
 
 ## build and push Docker Image
@@ -35,135 +128,9 @@ helm upgrade --install fastapi-app ./helm --namespace default
 kubectl rollout restart deployment fastapi-app-new-employee-app -n default
 ```
 
-## DB migration
-```bash
-alembic revision --autogenerate -m "Add product_version table"
-alembic upgrade head
-```
-
-## CLI App
-```bash
-python main.py
-```
-
-## DB connection
-```bash
-psql -U simonravitz -h localhost postgres
-```
-
 ## DB session info
 ```bash
 handling the database session using the Depends(get_db) pattern, which is typical for managing database sessions in FastAPI. The Depends(get_db) injects a database session (Session) into the route function and ensures that the session is available for the duration of the request.
-```
-
-## FastAPI
-```bash
-uvicorn src.main:app --reload
-```
-
-## Custom Decorator
-```bash
-@log_datetime
-------------------------------
-Run on: 2024-09-11 18:57:10
-------------------------------
-INFO:     127.0.0.1:61362 - "GET /api/employees HTTP/1.1" 200 OK
-```
-
-##  DTO using Pydantic BaseModel
-```bash
-class HealthCheckDTO(BaseModel):
-    status: str
-    version: str = None
-    buildTime: str = None
-```
-
-## SDK usage
-```bash
-health_response = client.get_health(environment=environment)
-```
-
-## docker-compose
-```bash
-docker-compose up --build
-```
-
-## Kubernetes
-```bash
-minikube start
-```
-
-## Kubernetes
-```bash
-kubectl config get-contexts
-```
-
-## Kubernetes
-```bash
-kubectl config use-context minikube
-```
-
-## run the app in Kubernetes
-```bash
-kubectl port-forward svc/fastapi-app-new-employee-app 8081:80 -n default
-```
-
-## GitOps using ArgoCD
-```bash
-kubectl port-forward svc/argocd-server -n argocd 8083:443
-```
-
-## Get Password for ArgoCD UI 
-```bash
- argocd admin initial-password -n argocd
-```
-
-## Paging & API Schema Response
-```bash
-{
-  "success": true,
-  "error": null,
-  "result": {
-    "environment": "dev",
-    "version": "0.1.0",
-    "build_time": "17/09/2024 17:46:00"
-  },
-  "paging": null
-}
-```
-
-## Nexus - Artifact Register Repository
-```bash
-/usr/local/nexus/bin/nexus start
-docker exec -it nexus cat /nexus-data/admin.password
-```
-
-## Verify the Deployment
-```bash
-kubectl get deployments
-kubectl get pods
-kubectl describe deployment employee-management-system
-```
-
-## Check Helm Deploy
-```bash
- helm status employee-management-system
-```
-
-## Logs
-```bash
- helm install employee-management-system ./helm --debug --dry-run
-```
-
-## API Docs
-```bash
-Swagger - http://127.0.0.1:8081/docs#
-```
-
-## EKS Cluster - Prometheus & Grafana, Monitoring Service
-```bash
-kubectl --namespace=prometheus port-forward deploy/prometheus-server 9090:9090
-kubectl --namespace grafana port-forward grafana-748f57f84b-55s7p 3000:3000
 ```
 
 ## Pagination
